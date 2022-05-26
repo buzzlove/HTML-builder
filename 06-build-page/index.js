@@ -70,10 +70,11 @@ function createHtml(){
 
     fs.readdir('./06-build-page/components/', (err, files) => {
             if(err) throw err; 
-            files.forEach(component => components.push(component));     
+            files.forEach(component => components.push(component)); 
+            rsTemplateHtml.on('data', chunk => data += chunk);
+            rsTemplateHtml.on('end', () => replaceSections(data), function(error){if(error) throw error;});      
         })
-    rsTemplateHtml.on('data', chunk => data += chunk);
-    rsTemplateHtml.on('end', () => replaceSections(data), function(error){if(error) throw error;});  
+    
 
         function replaceSections(data){
             let newData = ''
